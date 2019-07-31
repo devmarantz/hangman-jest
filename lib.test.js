@@ -78,4 +78,16 @@ describe('isWordSolved', () => {
     const result = isWordSolved(input);
     expect(result).toBeTruthy();
   });
+
+  it('should throw an TypeError is passed udefined in input', () => {
+    // // This says that at least one expect needs to be called
+    // expect.assertions(1);
+    // try {
+    //   isWordSolved();
+    // } catch (err) {
+    //   expect(err).toBeInstanceOf(TypeError);
+    // }
+
+    expect(() => isWordSolved()).toThrow(TypeError);
+  });
 });
