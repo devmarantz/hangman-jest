@@ -1,4 +1,5 @@
-const { stringify, createBlankWordArray, isWordSolved, print, randomlySelectWord } = require('./lib');
+const readlineSync = require('readline-sync');
+const { stringify, createBlankWordArray, isWordSolved, print, randomlySelectWord, askForALetter } = require('./lib');
 
 describe('Stringify', () => {
   it('stringify should convert an arbitrary string to a string', () => {
@@ -79,16 +80,16 @@ describe('isWordSolved', () => {
     expect(result).toBeTruthy();
   });
 
-  it('should throw an TypeError is passed udefined in input', () => {
+  it('should throw an TypeError is passed undefined in input', () => {
     // // This says that at least one expect needs to be called
-    // expect.assertions(1);
-    // try {
-    //   isWordSolved();
-    // } catch (err) {
-    //   expect(err).toBeInstanceOf(TypeError);
-    // }
+    expect.assertions(1);
+    try {
+      isWordSolved();
+    } catch (err) {
+      expect(err).toBeInstanceOf(TypeError);
+    }
 
-    expect(() => isWordSolved()).toThrow(TypeError);
+    // expect(isWordSolved()).toThrow(TypeError);
   });
 });
 
@@ -130,5 +131,14 @@ describe('randomlySelectWord', () => {
     expect(firstResult).toBe('first');
     expect(secondResult).toBe('second');
     expect(thirdResult).toBe('third');
+  });
+});
+
+jest.mock('readline-sync');
+describe('askForAletter', () => {
+  it('should return the letter that the user input', () => {
+    readlineSync.question.mockReturnValueOnce('a');
+    const result = askForALetter();
+    expect(result).toBe('a');
   });
 });
