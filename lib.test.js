@@ -1,4 +1,4 @@
-const { stringify, createBlankWordArray, isWordSolved } = require('./lib');
+const { stringify, createBlankWordArray, isWordSolved, print } = require('./lib');
 
 describe('Stringify', () => {
   it('stringify should convert an arbitrary string to a string', () => {
@@ -89,5 +89,23 @@ describe('isWordSolved', () => {
     // }
 
     expect(() => isWordSolved()).toThrow(TypeError);
+  });
+});
+
+describe('print', () => {
+  it('should log output to the console', () => {
+    // mock the console.log function
+    console.log = jest.fn();
+    print('Some input');
+    expect(console.log).toBeCalledTimes(1);
+    expect(console.log).toBeCalledWith('Some input');
+    console.log.mockClear();
+  });
+
+  it('should output an empty string to the console', () => {
+    print('');
+    expect(console.log).toBeCalledTimes(1);
+    expect(console.log).toBeCalledWith('');
+    console.log.mockClear();
   });
 });
