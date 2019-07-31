@@ -1,4 +1,4 @@
-const { stringify, createBlankWordArray, isWordSolved, print } = require('./lib');
+const { stringify, createBlankWordArray, isWordSolved, print, randomlySelectWord } = require('./lib');
 
 describe('Stringify', () => {
   it('stringify should convert an arbitrary string to a string', () => {
@@ -107,5 +107,28 @@ describe('print', () => {
     expect(console.log).toBeCalledTimes(1);
     expect(console.log).toBeCalledWith('');
     console.log.mockClear();
+    // TODO: How to restore
+  });
+});
+
+describe('randomlySelectWord', () => {
+  // Math.random = jest.fn(() => 0.5);
+  // it('should return the middle word', () => {
+  //   const result = randomlySelectWord(['first', 'second', 'third']);
+  //   expect(result).toBe('second');
+  // });
+
+  Math.random = jest.fn();
+  it('should return any word in the array', () => {
+    Math.random
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(0.5)
+      .mockReturnValueOnce(0.9);
+    const firstResult = randomlySelectWord(['first', 'second', 'third']);
+    const secondResult = randomlySelectWord(['first', 'second', 'third']);
+    const thirdResult = randomlySelectWord(['first', 'second', 'third']);
+    expect(firstResult).toBe('first');
+    expect(secondResult).toBe('second');
+    expect(thirdResult).toBe('third');
   });
 });

@@ -6,6 +6,12 @@ const readlineSync = require('readline-sync');
  * @returns {boolean}
  */
 function isWordSolved(wordArray) {
+  // try {
+  //   return wordArray.every(letter => letter !== '_');
+  // } catch (error) {
+  //   console.error('ERROR ERROR');
+  //   throw err;
+  // }
   return wordArray.every(letter => letter !== '_');
 }
 
