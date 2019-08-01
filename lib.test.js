@@ -1,5 +1,13 @@
 const readlineSync = require('readline-sync');
-const { stringify, createBlankWordArray, isWordSolved, print, randomlySelectWord, askForALetter } = require('./lib');
+const {
+  stringify,
+  createBlankWordArray,
+  isWordSolved,
+  print,
+  randomlySelectWord,
+  askForALetter,
+  validateInput,
+} = require('./lib');
 
 describe('Stringify', () => {
   it('stringify should convert an arbitrary string to a string', () => {
@@ -112,6 +120,50 @@ describe('print', () => {
   });
 });
 
+jest.mock('readline-sync');
+describe('askForAletter', () => {
+  it('should return the letter that the user input', () => {
+    readlineSync.question.mockReturnValueOnce('a');
+    const result = askForALetter();
+    expect(result).toBe('a');
+  });
+});
+
+describe('validateInput', () => {
+  it('should only return a single letter when a single letter is passed', () => {
+    const result = validateInput('a');
+    expect(result).toBe('a');
+  });
+
+  it('should return the first character if it receives a string', () => {
+    const result = validateInput('string');
+    expect(result).toBe('s');
+  });
+
+  it('should throw an error with a message of "Invalid input" if it recieves a number', () => {
+    expect.assertions(2);
+    try {
+      validateInput(2);
+    } catch (err) {
+      expect(err).toBeInstanceOf(Error);
+      expect(err.message).toBe('Invalid input');
+    }
+  });
+
+  it('should throw an error if it recieves an undefined input', () => {
+    expect(validateInput).toThrow('Invalid input');
+  });
+  it(`should throw an error with a message of "invalid input", if it recieves a character that isn't a character`, () => {
+    expect(() => {
+      validateInput('2');
+    }).toThrow('Invalid input');
+
+    expect(() => {
+      validateInput('.');
+    }).toThrow('Invalid input');
+  });
+});
+
 describe('randomlySelectWord', () => {
   // Math.random = jest.fn(() => 0.5);
   // it('should return the middle word', () => {
@@ -119,8 +171,8 @@ describe('randomlySelectWord', () => {
   //   expect(result).toBe('second');
   // });
 
-  Math.random = jest.fn();
   it('should return any word in the array', () => {
+    Math.random = jest.fn();
     Math.random
       .mockReturnValueOnce(0)
       .mockReturnValueOnce(0.5)
@@ -131,14 +183,5 @@ describe('randomlySelectWord', () => {
     expect(firstResult).toBe('first');
     expect(secondResult).toBe('second');
     expect(thirdResult).toBe('third');
-  });
-});
-
-jest.mock('readline-sync');
-describe('askForAletter', () => {
-  it('should return the letter that the user input', () => {
-    readlineSync.question.mockReturnValueOnce('a');
-    const result = askForALetter();
-    expect(result).toBe('a');
   });
 });
