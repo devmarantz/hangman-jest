@@ -1,0 +1,3 @@
+describe('playHangman', () => {
+  it('works', () => {});
+});
