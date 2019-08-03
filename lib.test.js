@@ -7,6 +7,8 @@ const {
   randomlySelectWord,
   askForALetter,
   validateInput,
+  fillInGuessedLetters,
+  wordIncludesLetter,
 } = require('./lib');
 
 describe('Stringify', () => {
@@ -120,15 +122,6 @@ describe('print', () => {
   });
 });
 
-jest.mock('readline-sync');
-describe('askForAletter', () => {
-  it('should return the letter that the user input', () => {
-    readlineSync.question.mockReturnValueOnce('a');
-    const result = askForALetter();
-    expect(result).toBe('a');
-  });
-});
-
 describe('validateInput', () => {
   it('should only return a single letter when a single letter is passed', () => {
     const result = validateInput('a');
@@ -161,6 +154,36 @@ describe('validateInput', () => {
     expect(() => {
       validateInput('.');
     }).toThrow('Invalid input');
+  });
+});
+
+describe('fillInGuessedLetters', () => {
+  it('should fill in a guessed letter for an incomplete word', () => {
+    let guessedLetter = 't';
+    let guessedWord = ['_', '_', '_'];
+    let targetWord = 'toy';
+
+    const result = fillInGuessedLetters(guessedLetter, guessedWord, targetWord);
+    expect(result).toEqual(['t', '_', '_']);
+  });
+});
+
+describe('wordIncludesLetter', () => {
+  it('should fill in a guessed letter for an incomplete word', () => {
+    const word = 'bat';
+    const letter = 'b';
+
+    const result = wordIncludesLetter(word, letter);
+    expect(result).toBe(true);
+  });
+});
+
+jest.mock('readline-sync');
+describe('askForAletter', () => {
+  it('should return the letter that the user input', () => {
+    readlineSync.question.mockReturnValueOnce('a');
+    const result = askForALetter();
+    expect(result).toBe('a');
   });
 });
 

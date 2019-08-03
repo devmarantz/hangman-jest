@@ -1,8 +1,20 @@
+const readlineSync = require('readline-sync');
 const hangman = require('./hangman');
+const {
+  createBlankWordArray,
+  isWordSolved,
+  print,
+  stringify,
+  askForALetter,
+  wordIncludesLetter,
+  fillInGuessedLetters,
+} = require('./lib');
 
 // jest.mock('readline-sync');
 describe('playHangman', () => {
   console.log = jest.fn();
+  // Same implementation
+  // console.log = jest.spyOn(console, 'log').to;
   const hangmanSpy = jest.spyOn(hangman, 'playHangman');
 
   afterEach(() => {
@@ -33,4 +45,13 @@ describe('playHangman', () => {
   });
 
   it.todo('should continue play if there was no win or loss');
+});
+
+jest.mock('readline-sync');
+describe('askForAletter', () => {
+  it('should return the letter that the user input', () => {
+    readlineSync.question.mockReturnValueOnce('a');
+    const result = askForALetter();
+    expect(result).toBe('a');
+  });
 });
