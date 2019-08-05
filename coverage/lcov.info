@@ -58,7 +58,7 @@ FNDA:3,(anonymous_5)
 FNDA:7,stringify
 FNDA:1,wordIncludesLetter
 FNDA:6,validateInput
-FNDA:2,askForALetter
+FNDA:1,askForALetter
 FNDA:4,print
 DA:1,2
 DA:15,10
@@ -70,7 +70,7 @@ DA:54,7
 DA:64,1
 DA:68,6
 DA:70,2
-DA:78,2
+DA:78,1
 DA:86,4
 DA:89,2
 LF:13
